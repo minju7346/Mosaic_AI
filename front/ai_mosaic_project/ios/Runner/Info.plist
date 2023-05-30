@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>Ai Mosaic Project</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.study.aimosaicproject</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>ai_mosaic_project</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(FLUTTER_BUILD_NAME)</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+      <key>CFBundleURLSchemes</key>
+      <array>
+        <!-- kakao login -->
+        <string>kakao9339b50a9606cf0e22f8d3b981254d96</string>
+		    <!-- google login -->
+        <string>com.googleusercontent.apps.62900900795-3lifbkap273t60evg0lm33a13m55navl</string>
+	    	<!-- naver login -->
+        <string>aimosaicproject</string>
+      </array>
+      </dict>
+    </array>
+
+	<key>LSApplicationQueriesSchemes</key>
+    <array>
+       <string>naversearchapp</string>
+       <string>naversearchthirdlogin</string>
+    </array>
+
+    <key>naverServiceAppUrlScheme</key>
+    <string>aimosaicproject</string>
+	
+    <!-- naver client_id -->
+    <key>naverConsumerKey</key>
+    <string>ZZ49SaOqQJTgyQLejk5H</string>
+    
+    <!-- naver client_secret -->
+    <key>naverConsumerSecret</key>
+    <string>G0vmjyGYR6</string>
+
+    <key>naverServiceAppName</key>
+    <string>ai_mosaic_project</string>
+
+    <!-- http allows configurations -->
+    <key>NSAppTransportSecurity</key>
+    <dict>
+       <key>NSAllowsArbitraryLoads</key>
+       <true/>
+       <key>NSExceptionDomains</key>
+       <dict>
+          <key>naver.com</key>
+          <dict>
+             <key>NSExceptionRequiresForwardSecrecy</key>
+             <false/>
+             <key>NSIncludesSubdomains</key>
+             <true/>
+          </dict>
+          <key>naver.net</key>
+          <dict>
+             <key>NSExceptionRequiresForwardSecrecy</key>
+             <false/>
+             <key>NSIncludesSubdomains</key>
+             <true/>
+          </dict>
+        </dict>
+    </dict>
+</dict>
+</plist>
