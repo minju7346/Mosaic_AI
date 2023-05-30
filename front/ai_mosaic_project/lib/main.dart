@@ -8,7 +8,6 @@ import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 void main () {
   //KakaoContext.clientId = "9339b50a9606cf0e22f8d3b981254d96";
   KakaoSdk.init(nativeAppKey: '9339b50a9606cf0e22f8d3b981254d96');
-  //initSdk()
   runApp(MyApp());
 }
 
