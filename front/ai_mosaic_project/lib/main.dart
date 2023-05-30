@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'screen/login_screen.dart';
 //import 'package:kakao_flutter_sdk/all.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-//import 'package:google_sign_in/google_sign_in.dart';
-//import 'package:flutter_naver_login/flutter_naver_login.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_naver_login/flutter_naver_login.dart';
 
 void main () {
   //KakaoContext.clientId = "9339b50a9606cf0e22f8d3b981254d96";
