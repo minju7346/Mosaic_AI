@@ -15,11 +15,9 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget { //공통
           shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10.0),bottomRight: Radius.circular(10.0))),
           backgroundColor: Colors.blue,
           elevation: 0.3,
-          title: Text("${userAccount[1]} 님,", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+          title: Text("${userAccount[2]} 님,", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
           leading: IconButton( //메뉴 
-              onPressed: () {print("${userAccount[0]}");
-      print("${userAccount[1]}");
-      print("${userAccount[2]}");}, 
+              onPressed: () {}, 
               icon: const Icon(Icons.menu)
             ),
           actions: [

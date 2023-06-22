@@ -9,7 +9,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 
 
-List<String> userAccount = []; //로그인 정보 - id(0), email(1), name(2)
+List<String> userAccount = ['id', 'email', 'name']; //로그인 정보 - id(0), email(1), name(2)
 
 class login_screen extends StatefulWidget {
   const login_screen({Key? key}) : super(key: key);
@@ -63,9 +63,9 @@ class _login_screenState extends State<login_screen> {
         _loginPlatform = LoginPlatform.google;
       });
 
-      userAccount[0] = googleUser.id;
-      userAccount[1] = googleUser.email;
-      userAccount[2] = googleUser.displayName.toString();
+      // userAccount[0] = googleUser.id;
+      // userAccount[1] = googleUser.email;
+      // userAccount[2] = googleUser.displayName.toString();
       
       // print("${userAccount[0]}");
       // print("${userAccount[1]}");
@@ -89,9 +89,9 @@ class _login_screenState extends State<login_screen> {
         _loginPlatform = LoginPlatform.naver;
       });
 
-      userAccount[0] = result.account.id;
-      userAccount[1] = result.account.email;
-      userAccount[2] = result.account.name;
+      // userAccount[0] = result.account.id;
+      // userAccount[1] = result.account.email;
+      // userAccount[2] = result.account.name;
 
       // print("${userAccount[0]}");
       // print("${userAccount[1]}");
