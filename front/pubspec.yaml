@@ -35,11 +35,12 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  #kakao_flutter_sdk: ^1.4.3
+  kakao_flutter_sdk: ^1.4.3
   http: ^1.0.0
-  kakao_flutter_sdk_user: ^1.4.3
+  #kakao_flutter_sdk_user: ^1.4.3
   google_sign_in: ^5.4.4
   flutter_naver_login: ^1.8.0
+  fluttertoast: ^8.2.2
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +69,10 @@ flutter:
     - assets/image/kakao_login.png
     - assets/image/google_login.png
     - assets/image/naver_login.png
+    - assets/image/loading.gif
+    - assets/image/loading_2.gif
+    - assets/image/loading_3.gif
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -91,6 +96,19 @@ flutter:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
-  #
+  fonts:
+  - family: NanumSquareNeo
+    fonts:
+      - asset: assets/fonts/NanumSquareNeo-aLt.ttf
+        weight: 200
+      - asset: assets/fonts/NanumSquareNeo-bRg.ttf
+        weight: 300
+      - asset: assets/fonts/NanumSquareNeo-cBd.ttf
+        weight: 500
+      - asset: assets/fonts/NanumSquareNeo-dEb.ttf
+        weight: 600
+      - asset: assets/fonts/NanumSquareNeo-eHv.ttf
+        weight: 700
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

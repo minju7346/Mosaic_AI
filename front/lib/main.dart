@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
-import 'screen/login_screen.dart';
+import 'package:ai_mosaic_project/screen/login.dart';
+import 'package:ai_mosaic_project/screen/home.dart';
+import 'package:ai_mosaic_project/screen/regi-list.dart';
+import 'package:ai_mosaic_project/screen/regi-add.dart';
+import 'package:ai_mosaic_project/screen/file-upload.dart';
+import 'package:ai_mosaic_project/screen/file-convert.dart';
+
+
+
 //import 'package:kakao_flutter_sdk/all.dart';
-import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-//import 'package:google_sign_in/google_sign_in.dart';
+//import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:kakao_flutter_sdk_common/kakao_flutter_sdk_common.dart';//import 'package:google_sign_in/google_sign_in.dart';
 //import 'package:flutter_naver_login/flutter_naver_login.dart';
 
 void main () {
@@ -19,14 +27,19 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       routes: { //Write Page with route 
-        // '/' :(context) => main(),
+        //'/' :(context) => WelcomePage(),
         '/1' :(context) => const login_screen(),
-        // '/c' :(context) => Screen3()
+        '/2' :(context) => const home_screen(),
+        '/3' :(context) => const regi_list_screen(),
+        '/4' :(context) => const regi_add_screen(),
+        '/5' :(context) => const file_upload_screen(),
+        '/6' :(context) => const file_convert_screen(),
       },
       debugShowCheckedModeBanner: false,
       title: 'aisaic',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: 'NanumSquareNeo',
       ),
       home: const WelcomePage(), //First page to start
     );
@@ -52,9 +65,9 @@ class WelcomePage extends StatelessWidget {
               ),
               const Text('aisaic',
               style: TextStyle(
-                fontSize: 50.0,
+                fontSize: 45.0,
                 color: Colors.black,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w600
               ),),
               const SizedBox(
                 height: 80.0,

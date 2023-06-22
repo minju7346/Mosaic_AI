@@ -54,7 +54,7 @@
       <array>
         <!-- kakao login -->
         <string>kakao9339b50a9606cf0e22f8d3b981254d96</string>
-		    <!-- google login -->
+         <!-- google login -->
         <string>com.googleusercontent.apps.62900900795-3lifbkap273t60evg0lm33a13m55navl</string>
 	    	<!-- naver login -->
         <string>aimosaicproject</string>
@@ -66,6 +66,8 @@
     <array>
        <string>naversearchapp</string>
        <string>naversearchthirdlogin</string>
+       <string>kakaokompassauth</string>
+       <string>kakaolink</string>
     </array>
 
     <key>naverServiceAppUrlScheme</key>
