@@ -37,6 +37,8 @@ class _file_download_screenState extends State<file_download_screen> {
                           onPressed: () { //서버에서 받아온 영상 다운로드 
                             print('VIDEO DOWNLOADING ....');
                             Navigator.of(context).pop();
+                            print('ALL PROCESS COMPLETED');
+                            Navigator.pushNamed(context, '/2');
                           },
                         ),
                       ],
@@ -75,34 +77,3 @@ class _file_download_screenState extends State<file_download_screen> {
   }
 }
 
-// class file_convert_screen extends StatefulWidget {
-//   const file_convert_screen({super.key});
-
-//   @override
-//   State<file_convert_screen> createState() => _file_convert_screen_State();
-// }
-
-// class _file_convert_screen_State extends State<file_convert_screen> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: MyAppBar(),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             Image.asset("assets/image/loading_3.gif"),
-//             Text(
-//               '진행 중 ...',
-//               style: TextStyle(
-//                   color: Color.fromARGB(255, 65, 64, 64), 
-//                   fontSize: 18, 
-//                   fontWeight: FontWeight.w600
-//                 ),
-//             )
-//           ],
-//           ),
-//       )
-//       );
-//   }
-// }

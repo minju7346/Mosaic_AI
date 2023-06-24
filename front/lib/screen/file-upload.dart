@@ -1,10 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:ai_mosaic_project/screen/home.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'package:ai_mosaic_project/screen/token.dart';
 
 class file_upload_screen extends StatefulWidget {
-  const file_upload_screen({Key? key}) : super(key: key);
+  const file_upload_screen({super.key});
 
   @override
   State<file_upload_screen> createState() => _file_upload_screenState();
@@ -24,8 +26,12 @@ class _file_upload_screenState extends State<file_upload_screen> {
         selectedVideo = video;
       });
 
-      _showNameDialog();
+      print('Video: $selectedVideo');
+
     }
+    _showNameDialog();
+    sendVideo(selectedVideo!, videoName!);
+  
   }
 
   Future<void> _showNameDialog() async {
@@ -42,17 +48,11 @@ class _file_upload_screenState extends State<file_upload_screen> {
           ),
           actions: [
             TextButton(
-              child: Text('재설정'),
-              onPressed: () {
-                Navigator.of(context).pop();
-                getVideoFromGallery();
-              },
-            ),
-            TextButton(
               child: Text('확인'),
               onPressed: () {
                 videoName = _textEditingController.text;
-                Navigator.of(context).pop();
+                //Navigator.of(context).pop();
+                Navigator.pushNamed(context, '/6');
               },
             ),
           ],
@@ -60,11 +60,32 @@ class _file_upload_screenState extends State<file_upload_screen> {
       },
     );
 
-    if (videoName != null && videoName!.isNotEmpty) {
-      setState(() {
-        // Perform the screen update with the selected video and name
-      });
+    // if (videoName != null && videoName!.isNotEmpty) {
+    //   setState(() {
+    //     // Perform the screen update with the selected video and name
+    //   });
+    // }
+  }
+
+  Future<void> sendVideo(File video, String name) async {
+    final url = Uri.parse('http://15.164.136.78:8080/file/upload');
+    final authToken = await MyTokenManager.getToken();
+
+    final request = http.MultipartRequest('POST', url);
+    request.headers['Authorization'] = authToken!;
+    request.files.add(await http.MultipartFile.fromPath('video', video.path));
+    request.fields['name'] = name;
+
+    final response = await request.send();
+    if (response.statusCode == 200) {
+      // Video upload successful
+      print('SENDING VIDEO SUCCESS');
+    } else {
+      // Video upload failed
+      print('SENDING VIDEO FAILED');
     }
+
+    print('SENDING SESSION IS OVER');
   }
 
   @override
@@ -76,62 +97,29 @@ class _file_upload_screenState extends State<file_upload_screen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconButton(
-              onPressed: () {
+              onPressed:() {
                 getVideoFromGallery();
-              },
-              icon: Icon(
-                Icons.cloud_upload,
+                //Navigator.pushNamed(context, '/6');
+              }, 
+              icon: Icon( 
+                Icons.cloud_upload, 
                 color: Colors.blue,
+                //size: 80,
               ),
               iconSize: 150,
             ),
             SizedBox(height: 20),
-            if (selectedVideo != null)
-              Column(
-                children: [
-                  // Image.asset(
-                  //   "assets/image/sample.gif",
-                  //   width: 200,
-                  //   height: 200,
-                  // ),
-                  SizedBox(height: 10),
-                  Text(
-                    videoName != null
-                        ? '$videoName.mp4'
-                        : '동영상 이름을 지정해주세요',
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 65, 64, 64),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            selectedVideo = null;
-                            videoName = null;
-                          });
-                        },
-                        child: Text('재설정'),
-                      ),
-                      SizedBox(width: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/7');
-                        },
-                        child: Text('확인'),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+            Text(
+              '파일을 업로드하세요',
+              style: TextStyle(
+                  color: Color.fromARGB(255, 65, 64, 64), 
+                  fontSize: 18, 
+                  fontWeight: FontWeight.w600
+                ),
+            )
           ],
-        ),
-      ),
-    );
+          ),
+      )
+      );
   }
 }

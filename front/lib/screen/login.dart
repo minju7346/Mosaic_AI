@@ -229,19 +229,20 @@ class _login_screenState extends State<login_screen> {
               : Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon( //Our Application logo
-                    Icons.person, 
-                    color: Colors.blue,
-                    size: 120,
-                  ),
-                  Text(
-                    'LOGIN',
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 65, 64, 64),
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+                  // Icon( //Our Application logo
+                  //   Icons.person, 
+                  //   color: Colors.blue,
+                  //   size: 120,
+                  // ),
+                  // Text(
+                  //   'LOGIN',
+                  //   style: TextStyle(
+                  //     color: Color.fromARGB(255, 65, 64, 64),
+                  //     fontSize: 18,
+                  //     fontWeight: FontWeight.w700,
+                  //   ),
+                  // ),
+                  Image.asset('assets/image/logo.png', width: 150, height: 150),
                   SizedBox(height: 120),
                   _loginButton(
                     'google_login',
