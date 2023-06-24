@@ -5,13 +5,12 @@ import 'package:ai_mosaic_project/screen/regi-list.dart';
 import 'package:ai_mosaic_project/screen/regi-add.dart';
 import 'package:ai_mosaic_project/screen/file-upload.dart';
 import 'package:ai_mosaic_project/screen/file-convert.dart';
-
-
-
+import 'package:ai_mosaic_project/screen/file-download.dart';
+import 'package:kakao_flutter_sdk_common/kakao_flutter_sdk_common.dart';
+//import 'package:google_sign_in/google_sign_in.dart';
+//import 'package:flutter_naver_login/flutter_naver_login.dart';
 //import 'package:kakao_flutter_sdk/all.dart';
 //import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-import 'package:kakao_flutter_sdk_common/kakao_flutter_sdk_common.dart';//import 'package:google_sign_in/google_sign_in.dart';
-//import 'package:flutter_naver_login/flutter_naver_login.dart';
 
 void main () {
   //KakaoContext.clientId = "9339b50a9606cf0e22f8d3b981254d96";
@@ -34,6 +33,8 @@ class MyApp extends StatelessWidget {
         '/4' :(context) => const regi_add_screen(),
         '/5' :(context) => const file_upload_screen(),
         '/6' :(context) => const file_convert_screen(),
+        '/7' :(context) => const file_download_screen(),
+
       },
       debugShowCheckedModeBanner: false,
       title: 'aisaic',
