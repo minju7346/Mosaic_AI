@@ -122,7 +122,7 @@ class home_screen extends StatelessWidget {
                     Navigator.pushNamed(context, '/5');
                   },
                 child: Text(
-                  'FACE UPLOAD',
+                  'VIDEO UPLOAD',
                    style: TextStyle(
                     color: Color.fromARGB(255, 59, 59, 59), 
                     fontSize: 25, 

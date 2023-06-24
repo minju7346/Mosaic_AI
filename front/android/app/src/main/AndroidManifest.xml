@@ -2,9 +2,9 @@
     package= "com.example.ai_mosaic_project"
     xmlns:tools="http://schemas.android.com/tools">
     <application
-        android:label="ai_mosaic_project"
+        android:label="AISAIC"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:exported="true"

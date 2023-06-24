@@ -29,10 +29,13 @@ class _file_upload_screenState extends State<file_upload_screen> {
       print('Video: $selectedVideo');
 
     }
-    _showNameDialog();
-    sendVideo(selectedVideo!, videoName!);
-  
+
+    await _showNameDialog();
+    // if (videoName != null && selectedVideo != null) {
+    //   sendVideo(selectedVideo!, videoName!);
+    // }
   }
+
 
   Future<void> _showNameDialog() async {
     TextEditingController _textEditingController = TextEditingController();
@@ -51,41 +54,39 @@ class _file_upload_screenState extends State<file_upload_screen> {
               child: Text('확인'),
               onPressed: () {
                 videoName = _textEditingController.text;
-                //Navigator.of(context).pop();
-                Navigator.pushNamed(context, '/6');
+                Navigator.of(context).pop();
+                //Navigator.pushNamed(context, '/6');
               },
             ),
           ],
         );
       },
     );
-
-    // if (videoName != null && videoName!.isNotEmpty) {
-    //   setState(() {
-    //     // Perform the screen update with the selected video and name
-    //   });
-    // }
   }
 
   Future<void> sendVideo(File video, String name) async {
-    final url = Uri.parse('http://15.164.136.78:8080/file/upload');
-    final authToken = await MyTokenManager.getToken();
+    try {
+      final url = Uri.parse('http://15.164.136.78:8080/s3/upload-video');
+      final authToken = await MyTokenManager.getToken();
 
-    final request = http.MultipartRequest('POST', url);
-    request.headers['Authorization'] = authToken!;
-    request.files.add(await http.MultipartFile.fromPath('video', video.path));
-    request.fields['name'] = name;
+      final request = http.MultipartRequest('POST', url);
+      request.headers['Authorization'] = authToken!;
+      request.files.add(await http.MultipartFile.fromPath('video', video.path));
+      request.fields['name'] = name;
 
-    final response = await request.send();
-    if (response.statusCode == 200) {
-      // Video upload successful
-      print('SENDING VIDEO SUCCESS');
-    } else {
-      // Video upload failed
-      print('SENDING VIDEO FAILED');
+      print('영상 전송 중 ...');
+
+      final response = await request.send();
+      if (response.statusCode == 200) {
+        print('SENDING VIDEO SUCCESS');
+      } else {
+        print('SENDING VIDEO FAILED');
+      }
+
+      print('SENDING SESSION IS OVER');
+    } catch (error) {
+      print('비디오 전송 실패: $error');
     }
-
-    print('SENDING SESSION IS OVER');
   }
 
   @override
@@ -93,32 +94,79 @@ class _file_upload_screenState extends State<file_upload_screen> {
     return Scaffold(
       appBar: MyAppBar(),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconButton(
-              onPressed:() {
-                getVideoFromGallery();
-                //Navigator.pushNamed(context, '/6');
-              }, 
-              icon: Icon( 
-                Icons.cloud_upload, 
-                color: Colors.blue,
-                //size: 80,
-              ),
-              iconSize: 150,
-            ),
-            SizedBox(height: 20),
-            Text(
-              '파일을 업로드하세요',
-              style: TextStyle(
-                  color: Color.fromARGB(255, 65, 64, 64), 
-                  fontSize: 18, 
-                  fontWeight: FontWeight.w600
+        child: (videoName != null && selectedVideo != null)
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                //Video Thumbnail
+                Icon(Icons.check, size: 80),
+                SizedBox(height: 20),
+                Text(
+                  '$videoName.mp4',
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 65, 64, 64), 
+                      fontSize: 18, 
+                      fontWeight: FontWeight.w600
+                  ),
                 ),
+                SizedBox(height: 50),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        getVideoFromGallery();
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          const Color(0xff0165E1),
+                        ),
+                      ),
+                      child: const Text('재설정'),
+                    ),
+                    SizedBox(width: 15),
+                    ElevatedButton(
+                      onPressed: () {
+                        sendVideo(selectedVideo!, videoName!);
+                        Navigator.pushNamed(context, '/6');
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          const Color(0xff0165E1),
+                        ),
+                      ),
+                      child: const Text('확인'),
+                    ),
+                  ],
+                ),
+              ],
             )
-          ],
-          ),
+          : Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                onPressed:() {
+                  getVideoFromGallery();
+                  //Navigator.pushNamed(context, '/6');
+                }, 
+                icon: Icon( 
+                  Icons.cloud_upload, 
+                  color: Colors.blue,
+                  //size: 80,
+                ),
+                iconSize: 150,
+              ),
+              SizedBox(height: 20),
+              Text(
+                '파일을 업로드하세요',
+                style: TextStyle(
+                    color: Color.fromARGB(255, 65, 64, 64), 
+                    fontSize: 18, 
+                    fontWeight: FontWeight.w600
+                  ),
+              )
+            ],
+            ),
       )
       );
   }

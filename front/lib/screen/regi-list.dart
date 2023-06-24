@@ -2,12 +2,11 @@ import 'package:ai_mosaic_project/screen/home.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:ai_mosaic_project/screen/token.dart';
+import 'dart:convert';
 
+List<String> registrant = []; // 등록인 리스트
 
-List<String> registrant = []; //등록인 리스트 
-
-
-class regi_tile extends StatelessWidget { //Listtile 
+class regi_tile extends StatelessWidget {
   final String name;
 
   const regi_tile(this.name);
@@ -30,10 +29,38 @@ class regi_tile extends StatelessWidget { //Listtile
           ),
         ],
       ),
-      child: Center(
-        child: Text(
-          name,
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+      child: InkWell(
+        onTap: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('삭제 확인'),
+                content: Text('해당 타일을 삭제하시겠습니까?'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // 닫기 버튼
+                    },
+                    child: Text('취소'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      _regi_list_screenState().deleteRegistrant(name); // 타일 삭제 함수 호출
+                      Navigator.of(context).pop(); // 닫기 버튼
+                    },
+                    child: Text('확인'),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+        child: Center(
+          child: Text(
+            name,
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+          ),
         ),
       ),
     );
@@ -48,46 +75,74 @@ class regi_list_screen extends StatefulWidget {
 }
 
 class _regi_list_screenState extends State<regi_list_screen> {
-
-  // List<String> registrant = []; //등록인 리스트 
-
   @override
   void initState() {
     super.initState();
     getRegistrantList();
   }
 
-  Future<void> getRegistrantList() async { //등록인 리스트 서버에 요청
-    
+  Future<void> getRegistrantList() async {
     final authToken = await MyTokenManager.getToken();
-    
+
     try {
       final response = await http.get(
         Uri.parse('http://15.164.136.78:8080/registrant/print'),
         headers: {
           'Content-Type': 'application/json',
-          'authToken': authToken!, // authToken 값 추가
-
+          'Authorization': authToken!,
         },
       );
 
-      if (response.statusCode == 200) {
-        final data = response.body; 
+      print('등록인 리스트 받아오는 중 ...');
 
-        List<String> registrantList = data.split(','); // 구분자 - 서버에서 보내는 메세지 구조 확인 후 수정 요망
-        
+      if (response.statusCode == 200) {
+        final data = response.body;
+
+        final List<dynamic> jsonData = json.decode(data);
+
+        List<String> registrantList = jsonData
+            .map((item) => item['name'].toString())
+            .toList();
+
         setState(() {
           registrant = registrantList;
         });
 
         print('GETTING REGISTRANT LIST SUCCESS : $authToken');
-
       } else {
         print('Failed to get registrant list');
         print(response.statusCode);
       }
     } catch (error) {
       print('Failed to get registrant list: $error');
+    }
+  }
+
+  Future<void> deleteRegistrant(String name) async {
+    final authToken = await MyTokenManager.getToken();
+
+    try {
+      final response = await http.delete(
+        Uri.parse('http://15.164.136.78:8080/registrant/delete'),
+        headers: {
+          'Content-Type': 'application/json',
+          'authToken': authToken!,
+        },
+        body: jsonEncode({'name': name}),
+      );
+
+      if (response.statusCode == 200) {
+        setState(() {
+          registrant.remove(name);
+        });
+
+        print('DELETING REGISTRANT SUCCESS: $name');
+      } else {
+        print('Failed to delete registrant');
+        print(response.statusCode);
+      }
+    } catch (error) {
+      print('Failed to delete registrant: $error');
     }
   }
 
@@ -98,11 +153,10 @@ class _regi_list_screenState extends State<regi_list_screen> {
       body: SafeArea(
         child: Scrollbar(
           child: registrant.isNotEmpty
-              ? ListView.builder( //등록인 리스트 화면에 build
+              ? ListView.builder(
                   itemCount: registrant.length,
                   itemBuilder: (context, index) {
                     return regi_tile(registrant[index]);
-                    //return regi_tile(index);
                   },
                 )
               : const Center(

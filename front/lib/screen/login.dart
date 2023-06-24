@@ -27,7 +27,7 @@ class _login_screenState extends State<login_screen> {
     super.initState();
   }
 
-    void signInWithKakao() async { //수정 필요 - 이름 가져오는데 이슈 발생 ..
+    void signInWithKakao() async { 
       try {
         bool isInstalled = await isKakaoTalkInstalled();
 
@@ -83,7 +83,6 @@ class _login_screenState extends State<login_screen> {
         if (response1.statusCode == 200) {
           final authToken = response1.body;
 
-          // tokenManager.saveToken(authToken);
           MyTokenManager.saveToken(token.accessToken);
           print('sending success');
           print('Kakao authToken: $authToken');

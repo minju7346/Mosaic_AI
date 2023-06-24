@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:ai_mosaic_project/screen/home.dart';
 
@@ -10,6 +11,20 @@ class file_convert_screen extends StatefulWidget {
 
 class _file_convert_screen_State extends State<file_convert_screen> {
   bool isFileConverted = false; // Track if the file conversion is completed
+  Timer? timer;
+
+  @override
+  void initState() {
+    super.initState();
+    simulateFileConversion();
+    startTimer();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
 
   Future<void> simulateFileConversion() async {
     // Simulate the file conversion process
@@ -45,10 +60,17 @@ class _file_convert_screen_State extends State<file_convert_screen> {
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    simulateFileConversion();
+  void startTimer() {
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      requestFileFromServer();
+    });
+  }
+
+  void requestFileFromServer() {
+    // TODO: Implement your code to request the file from the server
+    // This method will be called every 1 second until the file is received
+    // You can handle the received file and update the UI accordingly
+    // Once the file is received, you can cancel the timer using timer.cancel()
   }
 
   @override
