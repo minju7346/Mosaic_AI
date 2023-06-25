@@ -8,6 +8,7 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:ai_mosaic_project/screen/login_platform.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
+//import 'package:fluttertoast/fluttertoast.dart';
 
 //로그인 정보 - id(0), email(1), name(2)
 List<String> userAccount = ['id', 'email', 'name']; 

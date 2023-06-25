@@ -122,7 +122,7 @@ class _regi_list_screenState extends State<regi_list_screen> {
     final authToken = await MyTokenManager.getToken();
 
     try {
-      final response = await http.delete(
+      final response = await http.post(
         Uri.parse('http://15.164.136.78:8080/registrant/delete'),
         headers: {
           'Content-Type': 'application/json',

@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         '/4' :(context) => const regi_add_screen(),
         '/5' :(context) => const file_upload_screen(),
         '/6' :(context) => const file_convert_screen(),
-        //'/7' :(context) => const file_download_screen(),
+        '/7' :(context) => const file_download_screen(),
 
       },
       debugShowCheckedModeBanner: false,

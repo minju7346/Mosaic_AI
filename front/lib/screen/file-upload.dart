@@ -5,6 +5,10 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:ai_mosaic_project/screen/token.dart';
 
+File? selectedVideo;
+String? videoName;
+String fileName = "";
+
 class file_upload_screen extends StatefulWidget {
   const file_upload_screen({super.key});
 
@@ -14,23 +18,30 @@ class file_upload_screen extends StatefulWidget {
 
 class _file_upload_screenState extends State<file_upload_screen> {
   final picker = ImagePicker();
-  File? selectedVideo;
-  String? videoName;
+  // File? selectedVideo;
+  // String? videoName;
 
   Future<void> getVideoFromGallery() async {
     final pickedFile = await picker.pickVideo(source: ImageSource.gallery);
+    await _showNameDialog();
 
     if (pickedFile != null) {
       final video = File(pickedFile.path);
+
+      // 이미지 파일명 변경
+      fileName = '$videoName.mp4';
+      final renamedVideo = await video.rename(video.parent.path + '/' + fileName);
+
+
       setState(() {
-        selectedVideo = video;
+        selectedVideo = renamedVideo;
       });
 
       print('Video: $selectedVideo');
 
     }
 
-    await _showNameDialog();
+    // await _showNameDialog();
     // if (videoName != null && selectedVideo != null) {
     //   sendVideo(selectedVideo!, videoName!);
     // }
@@ -53,7 +64,11 @@ class _file_upload_screenState extends State<file_upload_screen> {
             TextButton(
               child: Text('확인'),
               onPressed: () {
-                videoName = _textEditingController.text;
+                setState(() {
+                  videoName = _textEditingController.text;
+                });
+
+                //videoName = _textEditingController.text;
                 Navigator.of(context).pop();
                 //Navigator.pushNamed(context, '/6');
               },
@@ -66,13 +81,14 @@ class _file_upload_screenState extends State<file_upload_screen> {
 
   Future<void> sendVideo(File video, String name) async {
     try {
-      final url = Uri.parse('http://15.164.136.78:8080/s3/upload-video');
       final authToken = await MyTokenManager.getToken();
+      final url = Uri.parse('http://15.164.136.78:8080/S3/upload-video');
+      
 
       final request = http.MultipartRequest('POST', url);
       request.headers['Authorization'] = authToken!;
-      request.files.add(await http.MultipartFile.fromPath('video', video.path));
-      request.fields['name'] = name;
+      request.files.add(await http.MultipartFile.fromPath('file', video.path));
+      //request.fields['name'] = name;s
 
       print('영상 전송 중 ...');
 
@@ -80,7 +96,7 @@ class _file_upload_screenState extends State<file_upload_screen> {
       if (response.statusCode == 200) {
         print('SENDING VIDEO SUCCESS');
       } else {
-        print('SENDING VIDEO FAILED');
+        print('SENDING VIDEO FAILED: ${response.statusCode}');
       }
 
       print('SENDING SESSION IS OVER');

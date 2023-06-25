@@ -1,41 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:ai_mosaic_project/screen/home.dart';
-import 'package:aws_s3_api/s3-2006-03-01.dart';
+import 'package:ai_mosaic_project/screen/file-upload.dart';
+import 'package:http/http.dart' as http;
+import 'dart:io';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+// import 'package:gallery_saver/gallery_saver.dart';
 
-class FileDownloadScreen extends StatefulWidget {
-  const FileDownloadScreen({Key? key}) : super(key: key);
+class file_download_screen extends StatefulWidget {
+  const file_download_screen({Key? key}) : super(key: key);
 
   @override
-  _FileDownloadScreenState createState() => _FileDownloadScreenState();
+  file_download_screenState createState() => file_download_screenState();
 }
 
-class _FileDownloadScreenState extends State<FileDownloadScreen> {
-  final String bucketName = 'YOUR_S3_BUCKET_NAME';
-  final String objectKey = 'YOUR_OBJECT_KEY'; // 다운로드할 동영상의 객체 키
+class file_download_screenState extends State<file_download_screen> {
 
-  Future<void> downloadVideoFromS3() async {
-    try {
-      // S3 클라이언트 초기화
-      // final s3 = AwsS3Api(
-      //   region: 'YOUR_AWS_REGION',
-      //   accessKey: 'YOUR_ACCESS_KEY',
-      //   secretKey: 'YOUR_SECRET_KEY',
-      // );
+  Future<void> downloadVideo() async {
+    var response = await http.get(Uri.parse('http://15.164.136.78:8080/S3/download?fileName=/video/convert/${fileName}')); 
 
-      // 동영상 다운로드
-      // final downloadResponse = await s3.getObject(
-      //   bucket: bucketName,
-      //   key: objectKey,
-      // );
+    if (response.statusCode == 200) {
+      var appDir = await getExternalStorageDirectory();
+      var downloadDir = '${appDir!.path}/Download'; 
+      //var downloadDir = '/storage/emulated/0/Downloads/'; 
 
-      // 다운로드한 동영상 데이터를 처리하는 코드 작성
-      // downloadResponse.bodyBytes에 다운로드한 데이터가 포함됩니다.
+      // Download 폴더가 없으면 생성
+      if (!Directory(downloadDir).existsSync()) {
+        Directory(downloadDir).createSync(recursive: true);
+      }
 
-      print('VIDEO DOWNLOAD COMPLETED');
-    } catch (e) {
-      print('VIDEO DOWNLOAD FAILED: $e');
+      var videoPath = '$downloadDir/${fileName}'; 
+
+      var file = File(videoPath);
+      await file.writeAsBytes(response.bodyBytes);
+
+      print('file');
+      print('동영상 저장 완료: $videoPath');
+
+    } else {
+      print('동영상 다운로드 실패: ${response.reasonPhrase}');
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +71,7 @@ class _FileDownloadScreenState extends State<FileDownloadScreen> {
                           onPressed: () {
                             print('VIDEO DOWNLOADING ....');
                             Navigator.of(context).pop();
-                            downloadVideoFromS3(); // S3에서 동영상 다운로드 호출
+                            downloadVideo(); // S3에서 동영상 다운로드 호출
                             print('ALL PROCESS COMPLETED');
                             Navigator.pushNamed(context, '/2');
                           },
@@ -88,7 +94,7 @@ class _FileDownloadScreenState extends State<FileDownloadScreen> {
             ),
             SizedBox(height: 20),
             Text(
-              '<서버에서 받은 동영상 이름 .....>',
+              '${fileName}',
               style: TextStyle(
                 color: Color.fromARGB(255, 65, 64, 64),
                 fontSize: 18,

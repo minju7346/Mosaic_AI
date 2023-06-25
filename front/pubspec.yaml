@@ -36,24 +36,18 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   kakao_flutter_sdk: ^1.4.3
-  #http: ^1.0.0
-  http: ^0.13.3
-  #kakao_flutter_sdk_user: ^1.4.3
   google_sign_in: ^5.4.4
   flutter_naver_login: ^1.8.0
   fluttertoast: ^8.2.2
+  http: ^0.13.1
   shared_preferences: ^2.1.2
   image_picker: ^0.8.9
   video_player: ^2.6.1
   flutter_launcher_icons: ^0.13.1
-  aws_s3_upload: ^1.5.0
-  simple_s3: ^0.3.2
-  aws_s3_api: ^2.0.0
-  amplify_flutter: <1.0.0
-  amplify_core: <1.0.0
-  amplify_analytics_pinpoint: <1.0.0
-  amplify_auth_cognito: <1.0.0
-  amplify_storage_s3: ^0.5.1
+  path: ^1.8.3
+  path_provider: ^2.0.15
+  gallery_saver: ^2.3.2
+
 
 dev_dependencies:
   flutter_test:

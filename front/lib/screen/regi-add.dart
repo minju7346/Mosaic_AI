@@ -5,8 +5,6 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:ai_mosaic_project/screen/token.dart';
 import 'dart:convert';
-// import 'package:aws_s3_upload/aws_s3_upload.dart';
-// import 'package:simple_s3/simple_s3.dart';
 
 class regi_add_screen extends StatefulWidget {
   const regi_add_screen({Key? key}) : super(key: key);
@@ -45,7 +43,8 @@ class _regi_add_screenState extends State<regi_add_screen> {
     }
 
     //sendImageAndName(selectedImage!, registrantName!);
-
+    sendImage(selectedImage!);
+    sendName(registrantName!);
 
   }
 
@@ -70,7 +69,7 @@ class _regi_add_screenState extends State<regi_add_screen> {
     }
 
     //sendImageAndName(selectedImage!, registrantName!);
-    //sendImage(selectedImage!, registrantName!);
+    sendImage(selectedImage!);
     sendName(registrantName!);
 
   }
@@ -109,58 +108,30 @@ class _regi_add_screenState extends State<regi_add_screen> {
     return name;
   }
 
-  Future<void> sendImage(File image, String name) async {
-    final imageFile = image;
-    //final imageName = imageFile.path.split('/').last;
-    final imageName = name;
-    final bucketName = 'ai-img-bucket'; // S3 버킷 이름
-    final region = 'ap-northeast-2'; // S3 버킷 리전
-    final url = 'https://$bucketName.s3.$region.amazonaws.com/$imageName';
+  Future<void> sendImage(File image) async {
+
+    final authToken = await MyTokenManager.getToken();
+    var imageURI = Uri.parse('http://15.164.136.78:8080/S3/upload-image');
 
     try {
-      final request = http.MultipartRequest('PUT', Uri.parse(url));
-      request.files.add(http.MultipartFile(
-        'file',
-        imageFile.readAsBytes().asStream(),
-        imageFile.lengthSync(),
-        filename: imageName,
-      ));
+      var imageRequest = http.MultipartRequest('POST', imageURI);
+      imageRequest.headers['Authorization'] = authToken!;
+      imageRequest.files.add(await http.MultipartFile.fromPath('file', image.path));
+    
 
-      final response = await request.send();
-      if (response.statusCode == 200) {
-        print('Image uploaded to S3');
+      var imageResponse = await imageRequest.send();
+      print('Sending registrant image ...');
+
+      if (imageResponse.statusCode == 200) {
+        print('SENDING IMAGE SUCCESS');
       } else {
-        print('Failed to upload image to S3: ${response.statusCode}');
+        print('SENDING IMAGE FAILED: ${imageResponse.statusCode}');
       }
-    } catch (e) {
-      print('Failed to upload image to S3 -- : $e');
+    } catch (error) {
+      print('Failed to send image: $error');
     }
+
   }
-
-  // Future<void> sendImage(File image) async {
-
-  //   final authToken = await MyTokenManager.getToken();
-  //   final imageURI = Uri.parse('http://15.164.136.78:8080/s3/upload-image');
-
-  //   try {
-  //     final imageRequest = http.MultipartRequest('PUT', imageURI);
-  //     imageRequest.headers['Content-Type'] = 'multipart/form-data';
-  //     //imageRequest.headers['authToken'] = authToken!;
-  //     imageRequest.files.add(await http.MultipartFile.fromPath('file', image.path));
-
-  //     final imageResponse = await imageRequest.send();
-  //     print('Sending registrant image ...');
-
-  //     if (imageResponse.statusCode == 200) {
-  //       print('SENDING IMAGE SUCCESS');
-  //     } else {
-  //       print('SENDING IMAGE FAILED: ${imageResponse.statusCode}');
-  //     }
-  //   } catch (error) {
-  //     print('Failed to send image: $error');
-  //   }
-
-  // }
 
   Future<void> sendName(String name) async { //등록인 이름 - 서버 전송
     final authToken = await MyTokenManager.getToken();
@@ -316,8 +287,8 @@ class _regi_add_screenState extends State<regi_add_screen> {
                   ],
                 )
                 : Text(
-                    //'새로운 사용자를 등록해주세요',
-                    'VItVbbNgm+Vdv7qVIotfRfPH+SkrBq+tfdSIh6CD',
+                    '새로운 사용자를 등록해주세요',
+                    //'VItVbbNgm+Vdv7qVIotfRfPH+SkrBq+tfdSIh6CD',
                     style: TextStyle(
                       color: Color.fromARGB(255, 59, 59, 59),
                       fontSize: 20,
