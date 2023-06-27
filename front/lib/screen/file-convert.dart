@@ -28,7 +28,7 @@ class _file_convert_screen_State extends State<file_convert_screen> {
 
   Future<void> simulateFileConversion() async {
     // Simulate the file conversion process
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 4));
     setState(() {
       isFileConverted = true;
     });
@@ -81,7 +81,7 @@ class _file_convert_screen_State extends State<file_convert_screen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset("assets/image/loading_3.gif"),
+            Image.asset("assets/image/loading.gif"),
             SizedBox(height: 20),
             Text(
               '진행 중 ...',
@@ -91,18 +91,18 @@ class _file_convert_screen_State extends State<file_convert_screen> {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/7');
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                  const Color(0xff0165E1),
-                ),
-              ),
-              child: const Text('임시 버튼 .. download'),
-            )
+            // SizedBox(height: 40),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     Navigator.pushNamed(context, '/7');
+            //   },
+            //   style: ButtonStyle(
+            //     backgroundColor: MaterialStateProperty.all(
+            //       const Color(0xff0165E1),
+            //     ),
+            //   ),
+            //   child: const Text('임시 버튼 .. download'),
+            // )
           ],
         ),
       ),

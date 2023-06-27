@@ -79,8 +79,6 @@ flutter:
     - assets/image/google_login.png
     - assets/image/naver_login.png
     - assets/image/loading.gif
-    - assets/image/loading_2.gif
-    - assets/image/loading_3.gif
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -21,7 +21,7 @@ class _file_upload_screenState extends State<file_upload_screen> {
   // File? selectedVideo;
   // String? videoName;
 
-  Future<void> getVideoFromGallery() async {
+  Future<void> getVideo() async {
     final pickedFile = await picker.pickVideo(source: ImageSource.gallery);
     await _showNameDialog();
 
@@ -55,7 +55,7 @@ class _file_upload_screenState extends State<file_upload_screen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('동영상 이름 지정'),
+          title: Text('동영상 이름을 입력하세요'),
           content: TextField(
             controller: _textEditingController,
             decoration: InputDecoration(hintText: '동영상 이름'),
@@ -131,7 +131,7 @@ class _file_upload_screenState extends State<file_upload_screen> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        getVideoFromGallery();
+                        getVideo();
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
@@ -162,7 +162,7 @@ class _file_upload_screenState extends State<file_upload_screen> {
             children: [
               IconButton(
                 onPressed:() {
-                  getVideoFromGallery();
+                  getVideo();
                   //Navigator.pushNamed(context, '/6');
                 }, 
                 icon: Icon( 
